@@ -15,7 +15,7 @@ import com.luxoft.springioc.lab2.model.Country;
 import com.luxoft.springioc.lab2.model.UsualPerson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:application-context2.xml")
+@ContextConfiguration(locations = "classpath:application-context2.xml")
 public class SpringTCFAppTest {
 	
 	@Autowired
