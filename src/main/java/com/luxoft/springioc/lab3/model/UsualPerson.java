@@ -2,34 +2,42 @@ package com.luxoft.springioc.lab3.model;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-//@Component("person")
-public class UsualPerson implements Person {
-	
-	public static int createdPersons = 0; 
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-//    @Value("${person.id}")
+@Service("person")
+public class UsualPerson implements Person, InitializingBean, DisposableBean {
+
+	public static int createdPersons = 0;
+
+    @Value("${person.id}")
     private int id;
 
+    @Value("${person.name}")
     private String name;
 
     @Autowired
     private Country country;
 
+    @Value("${person.age}")
     private int age;
 
+    @Value("${person.height}")
     private float height;
 
+    @Value("${person.isProgrammer}")
     private boolean isProgrammer;
 
+    @Value("${person.isRegistered}")
     private boolean isRegistered;
 
+    @Value("${person.isRegistered}")
 	private List<String> contacts;
 
     public void setIsProgrammer(boolean isProgrammer) {
@@ -70,7 +78,7 @@ public class UsualPerson implements Person {
     public void setProgrammer(boolean programmer) {
         isProgrammer = programmer;
     }
-    
+
     public boolean isRegistered() {
 		return isRegistered;
 	}
@@ -137,4 +145,13 @@ public class UsualPerson implements Person {
         return result;
     }
 
+	  @PreDestroy
+    public void destroy() throws Exception {
+        createdPersons--;
+    }
+
+	  @PostConstruct
+    public void afterPropertiesSet() throws Exception {
+        createdPersons++;
+    }
 }
